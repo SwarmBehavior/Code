@@ -1,4 +1,5 @@
 # Code
+
 **Swarming behavior using C++ with SFML and OpenCV libraries.**
  
 **In order to be able to execute the code, you should have these libraries downloaded and simply run the code.** 
@@ -37,6 +38,7 @@ U: Select Alignment
 I: Select Hunger
 
 O: Select Fear
+
 
 R: Reset all parameters to default values
 
