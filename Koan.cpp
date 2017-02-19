@@ -27,10 +27,6 @@ int main(){
 			case sf::Event::Closed:
 				window.close();
 				break;
-			case sf::Event::MouseButtonPressed:
-				cout << "Mouse!" << endl;
-				break;
-				// key pressed
 			case sf::Event::KeyPressed:
 				if (event.key.code == sf::Keyboard::P){
 					cin.get();
@@ -126,7 +122,7 @@ int main(){
 				Point2f v5 = boids[i].avoidEnemies(danger_dis);
 
 				Point2f av_vel(mod_vel*cos(boids[i].getRotation() * degree2radian), mod_vel*sin(boids[i].getRotation() * degree2radian));
-				nVelocity = /*boids[i].getVelocity()*/ av_vel + v1 + v2 + v3 + v4 + v5;
+				nVelocity = av_vel + v1 + v2 + v3 + v4 + v5;
 				limitVelocity(nVelocity);
 			} else {
 				nVelocity = boids[i].moveRandomly();
@@ -203,7 +199,7 @@ int main(){
 		sf::Text text;
 		sf::Font font;
 		font.loadFromFile("veramono-webfont.ttf");
-		text.setFont(font); // font is a sf::Font
+		text.setFont(font);
 		string mode_str = "";
 		if (mode == 1) mode_str = "EDIT";
 		else if (mode == 11) mode_str = "EDIT MYOPIA";
@@ -214,10 +210,9 @@ int main(){
 																		+ "\nConfort distance: " + to_string(comfort_dis) + "\nDanger distance: " + to_string(danger_dis)
 																		+ "\nMode: " + mode_str;
 		text.setString(in_screen);
-		text.setCharacterSize(14); // in pixels, not points!
+		text.setCharacterSize(14);
 		text.setColor(sf::Color::White);
 
-		// inside the main loop, between window.clear() and window.display()
 		window.draw(text);
 
 		window.display();
