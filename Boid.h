@@ -28,13 +28,13 @@
 using namespace cv;
 using namespace std;
 
-#define width 800
-#define height 500
+#define width 1200
+#define height 700
 #define degree2radian 0.01745329252
 #define radian2degree 57.2958279
 #define PI 3.14159
 
-#define MYOPIA 100
+#define MYOPIA 60
 #define COMFORT_DIS 40
 #define DANGER_DIS 80
 #define mod_vel 12
@@ -52,30 +52,32 @@ using namespace std;
  *      Author: irenerrrd
  */
 
-
-class Boid: public sf::ConvexShape{
+class Boid: public sf::Sprite{
 public:
 
-	Boid(){
+	Boid(sf::Texture & texture){
 		// Create the  shape
-		this->setPointCount(3); //3 to be a triangle
-		this->setPoint(0, sf::Vector2f(10.0f, 0.0f)); //This numbers allows the center of the triangle be the same as the sprite center
-		this->setPoint(1, sf::Vector2f(-10.0f, 7.5f));
-		this->setPoint(2, sf::Vector2f(-10.0f, -7.5f));
+//		this->setPointCount(3); //3 to be a triangle
+//		this->setPoint(0, sf::Vector2f(10.0f, 0.0f)); //This numbers allows the center of the triangle be the same as the sprite center
+//		this->setPoint(1, sf::Vector2f(-10.0f, 7.5f));
+//		this->setPoint(2, sf::Vector2f(-10.0f, -7.5f));
 
 		// Give a random color
-		int randomR = rand() % 255;
-		int randomG = rand() % 255;
-		int randomB = rand() % 255;
-		sf::Color random_color (randomR, randomG, randomB, 255);
-		this->setFillColor(random_color);
-		this->setOutlineColor(sf::Color (255, 255, 255, 255));
-		this->setOutlineThickness(1);
+//		int randomR = rand() % 255;
+//		int randomG = rand() % 255;
+//		int randomB = rand() % 255;
+//		sf::Color random_color (randomR, randomG, randomB, 255);
 
+		// this->setFillColor(random_color);
+		// this->setOutlineColor(sf::Color (255, 255, 255, 255));
+		// this->setOutlineThickness(1);
+
+		this->setTexture(texture);
 		// Give a random position
 		float randomx = (float)(rand() % width);
 		float randomy = (float)(rand() % height);
 		this->setPosition(cvRound(randomx), cvRound(randomy));
+		this->setOrigin(35.0,15.0);
 		this->setRotation((float)(rand() % 360));
 
 		float rotation = this->getRotation() * degree2radian;  //We take into account the rotation to move correctly

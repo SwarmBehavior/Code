@@ -33,13 +33,15 @@ void createFood(sf::CircleShape & food) {
 
 void createEnemy(Boid & enemy){
 	// Create the  shape
-	enemy.setPointCount(3); //3 to be a triangle
-	enemy.setPoint(0, sf::Vector2f(12.0f, 0.0f)); //This numbers allows the center of the triangle be the same as the sprite center
-	enemy.setPoint(1, sf::Vector2f(-12.0f, 9.0f));
-	enemy.setPoint(2, sf::Vector2f(-12.0f, -9.0f));
-	enemy.setFillColor(sf::Color::Red);
-	enemy.setOutlineColor(sf::Color(255,0,0,50));
-	enemy.setOutlineThickness(2);
+//	enemy.setPointCount(3); //3 to be a triangle
+//	enemy.setPoint(0, sf::Vector2f(12.0f, 0.0f)); //This numbers allows the center of the triangle be the same as the sprite center
+//	enemy.setPoint(1, sf::Vector2f(-12.0f, 9.0f));
+//	enemy.setPoint(2, sf::Vector2f(-12.0f, -9.0f));
+//	enemy.setFillColor(sf::Color::Red);
+//	enemy.setOutlineColor(sf::Color(255,0,0,50));
+//	enemy.setOutlineThickness(2);
+
+	enemy.setOrigin(75.0,22.5);
 
 	// Give a random position
 	float randomx = (float)(rand() % width);
@@ -79,31 +81,25 @@ bool Boid::look_surroundings(std::vector<std::vector<Point> > & map, vector<Boid
 			if (j != 0 || i != 0){
 				cv::Point pos = keepInside(x+i, y+j);
 				if (map[pos.x][pos.y].x != EMPTY){
-					float dis = sqrt((pow(i,2) + pow(j,2)));
-					if (dis <= 3*myopia){
-						float direction = norm_angle(atan2(y, x));
-						if (fabs(norm_angle(direction - norm_angle(this->getRotation() * degree2radian))) < 120){
+					float direction = norm_angle(atan2(y, x));
+					if (fabs(norm_angle(direction - norm_angle(this->getRotation() * degree2radian))) < 120){
 
-							if (map[pos.x][pos.y].x == FOOD){
-								found = true;
-								this->food = Point(x+i, y+j);
-							}
+						float dis = sqrt((pow(i,2) + pow(j,2)));
+						if (dis <= 3*myopia && map[pos.x][pos.y].x == FOOD){
+							found = true;
+							this->food = Point(x+i, y+j);
+						}
 
-							if (dis <= 3*myopia){
-								if (map[pos.x][pos.y].x == ENEMY){
-									this->enemies.push_back(Point(x+i, y+j));
-									found = true;
-								}
+						if (dis <= 2*myopia && map[pos.x][pos.y].x == ENEMY){
+							found = true;
+							this->enemies.push_back(Point(x+i, y+j));
+						}
 
-								if (dis <= myopia){
-									if (map[pos.x][pos.y].x == FRIEND){
-										Boid b = boids[map[pos.x][pos.y].y];
-										Friend fr (Point(x+i,y+j), b.getVelocityX(), b.getVelocityY());
-										this->friends.push_back(fr);
-										found = true;
-									}
-								}
-							}
+						if (dis <= myopia && map[pos.x][pos.y].x == FRIEND){
+							found = true;
+							Boid b = boids[map[pos.x][pos.y].y];
+							Friend fr (Point(x+i,y+j), b.getVelocityX(), b.getVelocityY());
+							this->friends.push_back(fr);
 						}
 					}
 				}
@@ -154,7 +150,7 @@ Point2f Boid::lookForFriends(){
 		mass_center.y /= found_friends;
 
 		Point2f vel(mass_center.x - x, mass_center.y - y) ;
-		return vel / 10.0;
+		return vel;
 	} else {
 		return Point2f(0,0);
 	}
@@ -166,7 +162,7 @@ Point2f Boid::lookForFood() {
 
 	if (this->food.x != 0 && this->food.y != 0) {
 		Point2f vel(this->food.x - x, this->food.y - y);
-		return vel / 10.0;
+		return vel;
 	} else {
 		return Point2f(0, 0);
 	}
@@ -224,7 +220,7 @@ Point2f Boid::giveMeSpace(int comfort_dis){
 	}
 
 	if (encontrado)
-		return Point2f(center.x / 2, center.y / 2);
+		return Point2f(center.x, center.y);
 	else
 		return center;
 }
@@ -244,7 +240,7 @@ Point2f Boid::uniformVel(){
 		uni_vel.y /= found_friends;
 
 		Point2f dif(uni_vel.x - this->velocity_x, uni_vel.y - this->velocity_y);
-		return dif/2;
+		return dif;
 	} else {
 		return Point2f(0,0);
 	}
