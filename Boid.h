@@ -34,9 +34,9 @@ using namespace std;
 #define radian2degree 57.2958279
 #define PI 3.14159
 
-#define MYOPIA 60
-#define COMFORT_DIS 40
-#define DANGER_DIS 80
+#define MYOPIA 100
+#define COMFORT_DIS 60
+#define DANGER_DIS 120
 #define mod_vel 12
 #define vel_max 25
 

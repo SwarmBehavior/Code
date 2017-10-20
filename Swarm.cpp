@@ -33,14 +33,10 @@ int main(){
 	int danger_dis = DANGER_DIS;
 
 	sf::Texture fish1, fish2, fish3, shark;
-	fish1.loadFromFile("/home/irenerrrd/Workspace/Swarm/fish1.png");
-	fish2.loadFromFile("/home/irenerrrd/Workspace/Swarm/fish2.png");
-	fish3.loadFromFile("/home/irenerrrd/Workspace/Swarm/fish3.png");
-	shark.loadFromFile("/home/irenerrrd/Workspace/Swarm/shark_little.png");
+	fish1.loadFromFile("/home/irenerrrd/Workspace/Swarm/gulf.png");
+	shark.loadFromFile("/home/irenerrrd/Workspace/Swarm/redfish.png");
 	vector<sf::Texture> fishes;
 	fishes.push_back(fish1);
-	fishes.push_back(fish2);
-	fishes.push_back(fish3);
 
 	while (window.isOpen()){
 		Mat img_map(height, width, CV_8UC3, Scalar(0,0,0));
@@ -57,7 +53,7 @@ int main(){
 					cin.get();
 				}
 				if (event.key.code == sf::Keyboard::Up){
-					Boid boid(fishes[rand() % 3]);
+					Boid boid(fishes[0]);
 					boids.push_back(boid);
 				} else if (event.key.code == sf::Keyboard::Down){
 					if (!boids.empty()){
